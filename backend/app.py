@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import sys
+import joblib
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -8,6 +9,15 @@ from fastapi.middleware.cors import CORSMiddleware
 sys.path.insert(0, os.path.dirname(__file__))
 
 from poi_fetcher import fetch_pois
+
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "model.pkl")
+model = None
+
+if os.path.exists(MODEL_PATH):
+    model = joblib.load(MODEL_PATH)
+    print("[OK] ML model loaded: model.pkl")
+else:
+    print("[WARNING] model.pkl not found. Falling back to popularity ranking.")
 
 # --------------------------------------------------
 # FASTAPI APP INITIALIZATION
@@ -45,7 +55,7 @@ async def generate_itinerary(request: Request):
         budget = int(data.get("budget", 0))
         days = int(data.get("days", 1))
 
-        print(f"\n[REQUEST] City={city}, Budget=₹{budget}, Days={days}")
+        print(f"\n[REQUEST] City={city}, Budget=Rs {budget}, Days={days}")
 
         if not city:
             raise HTTPException(status_code=400, detail="City name is required")
@@ -68,18 +78,23 @@ async def generate_itinerary(request: Request):
         df = pd.DataFrame(places)
 
         # Filter by budget
-        filtered = df[df["cost"] <= budget].sort_values(
-            by="popularity", ascending=False
-        )
+        filtered = df[df["cost"] <= budget].copy()
 
         if filtered.empty:
             raise HTTPException(
                 status_code=400,
                 detail={
-                    "error": f"No affordable places in {city} within ₹{budget}",
+                    "error": f"No affordable places in {city} within Rs {budget}",
                     "min_budget": int(df["cost"].min())
                 }
             )
+
+        if model is not None:
+            features = filtered[["rating", "popularity", "cost"]]
+            filtered["ml_score"] = model.predict(features)
+            filtered = filtered.sort_values(by="ml_score", ascending=False)
+        else:
+            filtered = filtered.sort_values(by="popularity", ascending=False)
 
         # --------------------------------------------------
         # DAY-WISE ITINERARY
@@ -102,7 +117,7 @@ async def generate_itinerary(request: Request):
                     "category": place["category"],
                     "cost": int(place["cost"]),
                     "rating": round(place["rating"], 1),
-                    "popularity": int(place["popularity"]),
+                    "popularity": round(float(place["popularity"]), 2),
                     "city": place["city"]
                 })
 

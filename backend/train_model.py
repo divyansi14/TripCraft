@@ -1,34 +1,45 @@
+import os
+import joblib
 import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, confusion_matrix
-import pickle
+from sklearn.metrics import mean_squared_error
 
-# Load dataset
-df = pd.read_csv("../data/dataset.csv")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_PATH = os.path.join(BASE_DIR, "data", "places.csv")
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "model.pkl")
 
-X = df[["feature1", "feature2", "feature3"]]
-y = df["label"]
 
-# Split data
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.25, random_state=42
-)
+def main():
+    df = pd.read_csv(DATA_PATH)
 
-# Train model
-model = LogisticRegression()
-model.fit(X_train, y_train)
+    required_columns = {"rating", "popularity", "cost"}
+    missing = required_columns.difference(df.columns)
+    if missing:
+        raise ValueError(f"Missing required columns in dataset: {sorted(missing)}")
 
-# Predictions
-y_pred = model.predict(X_test)
+    # Create a learnable target if score is not present.
+    if "score" not in df.columns:
+        df["score"] = (df["rating"] * 2.0) + (df["popularity"] * 5.0) - (df["cost"] * 0.001)
 
-# Evaluation
-accuracy = accuracy_score(y_test, y_pred)
-cm = confusion_matrix(y_test, y_pred)
+    X = df[["rating", "popularity", "cost"]]
+    y = df["score"]
 
-print("Model Accuracy:", accuracy)
-print("Confusion Matrix:\n", cm)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
 
-# Save model
-with open("model.pkl", "wb") as f:
-    pickle.dump(model, f)
+    model = RandomForestRegressor(n_estimators=200, random_state=42)
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_test)
+    mse = mean_squared_error(y_test, y_pred)
+
+    joblib.dump(model, MODEL_PATH)
+
+    print(f"Model trained. MSE: {mse:.6f}")
+    print(f"Model saved: {MODEL_PATH}")
+
+
+if __name__ == "__main__":
+    main()
