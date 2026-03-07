@@ -1,0 +1,11 @@
+user_id,interest,category,visited
+1,history,museum,1
+1,history,park,0
+1,history,monument,1
+2,nature,park,1
+2,nature,museum,0
+2,nature,nature,1
+3,food,food,1
+3,food,museum,0
+4,art,gallery,1
+4,art,park,0

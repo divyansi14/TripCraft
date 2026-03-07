@@ -1,0 +1,51 @@
+place_id,city,name,category,cost,rating,popularity
+1,Hyderabad,Charminar,history,800,4.6,0.95
+2,Hyderabad,Golconda Fort,history,1000,4.7,0.96
+3,Hyderabad,Hussain Sagar,nature,600,4.4,0.90
+4,Hyderabad,Food Street,food,700,4.8,0.97
+5,Hyderabad,Ramoji Film City,entertainment,2500,4.5,0.92
+6,Hyderabad,Birla Temple,religious,500,4.6,0.88
+7,Hyderabad,Mecca Masjid,religious,400,4.5,0.85
+8,Hyderabad,Tank Bund,nature,300,4.3,0.82
+9,Hyderabad,Salar Jung Museum,museum,1200,4.7,0.89
+10,Hyderabad,Necklace Road,nature,200,4.2,0.80
+11,Delhi,Red Fort,history,1500,4.6,0.94
+12,Delhi,India Gate,history,800,4.5,0.92
+13,Delhi,Chandni Chowk,food,900,4.7,0.93
+14,Delhi,Jama Masjid,religious,400,4.6,0.87
+15,Delhi,Raj Ghat,historical,500,4.4,0.85
+16,Delhi,Humayun's Tomb,history,1200,4.7,0.88
+17,Delhi,Qutub Minar,history,1000,4.6,0.90
+18,Delhi,Delhi Zoo,family,600,4.3,0.83
+19,Delhi,Lodhi Garden,nature,300,4.2,0.81
+20,Delhi,National Museum,museum,1100,4.6,0.84
+21,Mumbai,Marine Drive,nature,500,4.5,0.89
+22,Mumbai,Taj Mahal,history,2000,4.9,0.99
+23,Mumbai,Gateway of India,monument,800,4.4,0.91
+24,Mumbai,Colaba Causeway,shopping,1200,4.3,0.86
+25,Mumbai,Haji Ali,religious,400,4.6,0.88
+26,Mumbai,Elephanta Caves,history,1500,4.7,0.87
+27,Mumbai,Worli Sea Face,nature,200,4.2,0.79
+28,Mumbai,Mount Mary Church,religious,500,4.5,0.84
+29,Mumbai,Chowpatty Beach,nature,300,4.1,0.78
+30,Mumbai,Prince of Wales Museum,museum,1300,4.6,0.85
+31,Goa,Baga Beach,nature,600,4.4,0.91
+32,Goa,Fort Aguada,history,1000,4.6,0.89
+33,Goa,Basilica of Bom Jesus,religious,400,4.7,0.88
+34,Goa,Dudhsagar Waterfall,nature,1200,4.8,0.93
+35,Goa,Churches of Goa,religious,500,4.5,0.87
+36,Goa,Calangute Beach,nature,700,4.3,0.85
+37,Goa,Arabitown,market,800,4.2,0.80
+38,Goa,Panjim Town,city,600,4.1,0.79
+39,Goa,Anjuna Market,shopping,900,4.2,0.81
+40,Goa,Spice Plantation,nature,1100,4.6,0.86
+41,Bangalore,Vidhana Soudha,architecture,500,4.6,0.88
+42,Bangalore,Tipu Sultan Palace,history,1000,4.5,0.86
+43,Bangalore,Cubbon Park,nature,400,4.3,0.84
+44,Bangalore,ISKCON Temple,religious,600,4.7,0.87
+45,Bangalore,St. Mark's Cathedral,religious,400,4.4,0.82
+46,Bangalore,Bangalore Fort,history,800,4.4,0.85
+47,Bangalore,Botanical Garden,nature,700,4.5,0.83
+48,Bangalore,Commercial Street,shopping,1200,4.2,0.81
+49,Bangalore,Nandi Hills,nature,1500,4.6,0.90
+50,Bangalore,Innovative Film City,entertainment,2000,4.4,0.84
